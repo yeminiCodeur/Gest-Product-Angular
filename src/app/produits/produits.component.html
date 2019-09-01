@@ -3,7 +3,7 @@
     <div class="card-body">
       <div class="row">
         <div class="col-4">
-          <button (click)="onGetProducts()" class="btn btn-sm btn-success pull-right">Show products</button>
+          <button (click)="onGetProducts()" class="btn btn-sm btn-success">Show products</button>
         </div>
         <div class="col-4">
           <form #f="ngForm">
@@ -11,6 +11,17 @@
                <label for="keyword">Recherche</label>
                <input (keyup)="onTapeKeyword(f.value)" ngModel placeholder="Tapez votre mot de clet de recherche ici!!" type="text" name="keyword" id="keyword" class="form-control">
              </div>
+          </form>
+        </div>
+        <div class="col-4">
+          <form #f1="ngForm">
+            <div class="form-group">
+              <label for="id">Filtre par categorie</label>
+                <select *ngIf="categories"  class="form-control" ngModel  name="id" id="id" (change)="onChangeSelect(f1.value)">
+                  <option value="">----------</option>
+                  <option *ngFor="let c of categories._embedded.categories" value="{{c.id}}">{{c.designation}}</option>
+                </select>
+            </div>
           </form>
         </div>
       </div>
@@ -23,6 +34,7 @@
               <th scope="col">Designation</th>
               <th scope="col">Quantite</th>
               <th scope="col">Prix</th>
+              <th scope="col">Category</th>
               <th colspan="2">Action</th>
             </tr>
             </thead>
@@ -32,6 +44,7 @@
                <td>{{p.description}}</td>
               <td>{{p.quantity}}</td>
               <td>{{p.price|number:'0.2'}}FCA</td>
+              <td>{{p.category.designation}}</td>
               <td><a href="" class="btn-info btn">edit</a></td>
               <td><a (click)="onDeleteProduct(p)" class="btn-danger btn">delete</a></td>
             </tr>

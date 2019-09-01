@@ -13,9 +13,16 @@ export class ProduitsComponent implements OnInit {
   currentPage:number=0
   totalPages:number=0
   pages:Array<number>;
+  categories: any;
   constructor(private service:CatalogueService) { }
 
   ngOnInit() {
+
+    this.service.findAllCategory().subscribe(data =>{
+      this.categories=data ;
+    },error=>{
+      console.log(error);
+    })
 
   }
   onGetProducts() {
@@ -51,5 +58,13 @@ export class ProduitsComponent implements OnInit {
       });
 
     }
+  }
+
+  onChangeSelect(value) {
+    this.service.findAllByCategory(value.id,this.currentPage,this.size).subscribe(data =>{
+      this.products=data ;
+    },error=>{
+      console.log(error);
+    })
   }
 }

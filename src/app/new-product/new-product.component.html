@@ -1,1 +1,65 @@
-<p>new-product works!</p>
+<div class="container">
+  <p></p>
+  <div class="row">
+  <div class="col-4">
+  <div class="card">
+    <div class="card-body">
+        <form #f="ngForm" (ngSubmit)="saveProduct(f.value)">
+        <div class="form-group">
+              <label for="designation">Designation</label>
+              <input ngModel placeholder="Designation" type="text" name="designation" id="designation" class="form-control">
+            </div>
+          <div class="form-group">
+            <label for="price">Prix</label>
+            <input ngModel placeholder="Price" type="number" name="price" id="price" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="quantite">Quantite</label>
+            <input ngModel placeholder="Quantite" type="number" name="quantity" id="quantite" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="categorie">Filtre par categorie</label>
+            <select *ngIf="categories"  class="form-control" ngModel  name="categorie" id="categorie">
+              <option value="">----------</option>
+              <option *ngFor="let c of categories._embedded.categories" value="{{c.id}}">{{c.designation}}</option>
+            </select>
+          </div>
+          <button class="btn btn-sm btn-primary">Ajouter</button>
+        </form>
+      </div>
+  </div>
+  </div>
+  <div class="col-8">
+    <div class="card">
+      <div class="card-body">
+        <h4 *ngIf="products" class="card-title">Liste de Produits</h4>
+          <table class="table table-hover" *ngIf="products">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Designation</th>
+              <th scope="col">Quantite</th>
+              <th scope="col">Prix</th>
+              <th scope="col">Category</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let p of products._embedded.products">
+              <th scope="row">{{p.id}}</th>
+              <td>{{p.description}}</td>
+              <td>{{p.quantity}}</td>
+              <td>{{p.price|number:'0.2'}}FCA</td>
+              <td></td>
+           </tr>
+            </tbody>
+          </table>
+          <ul *ngIf="pages" class="pagination">
+            <li *ngFor="let p of pages; let i=index" class="page-link " [ngClass]=" i == currentPage ? 'active' :''">
+              <a class="clickable" (click)="onProductPage(i)"> {{i}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+  </div>
+  </div>
+</div>
