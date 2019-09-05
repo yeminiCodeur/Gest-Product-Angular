@@ -34,7 +34,6 @@
               <th scope="col">Designation</th>
               <th scope="col">Quantite</th>
               <th scope="col">Prix</th>
-              <th scope="col">Category</th>
               <th colspan="2">Action</th>
             </tr>
             </thead>
@@ -44,8 +43,7 @@
                <td>{{p.description}}</td>
               <td>{{p.quantity}}</td>
               <td>{{p.price|number:'0.2'}}FCA</td>
-              <td>{{p.category.designation}}</td>
-              <td><a href="" class="btn-info btn">edit</a></td>
+              <td><a (click)="onEditProduct(p)"class="btn-info btn">edit</a></td>
               <td><a (click)="onDeleteProduct(p)" class="btn-danger btn">delete</a></td>
             </tr>
             </tbody>

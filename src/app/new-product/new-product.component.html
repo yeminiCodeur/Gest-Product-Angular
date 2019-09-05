@@ -7,7 +7,7 @@
         <form #f="ngForm" (ngSubmit)="saveProduct(f.value)">
         <div class="form-group">
               <label for="designation">Designation</label>
-              <input ngModel placeholder="Designation" type="text" name="designation" id="designation" class="form-control">
+              <input ngModel placeholder="Designation" type="text" name="description" id="designation" class="form-control">
             </div>
           <div class="form-group">
             <label for="price">Prix</label>
@@ -18,8 +18,8 @@
             <input ngModel placeholder="Quantite" type="number" name="quantity" id="quantite" class="form-control">
           </div>
           <div class="form-group">
-            <label for="categorie">Filtre par categorie</label>
-            <select *ngIf="categories"  class="form-control" ngModel  name="categorie" id="categorie">
+            <label for="category">Filtre par categorie</label>
+            <select *ngIf="categories"  class="form-control" ngModel  name="category" id="category">
               <option value="">----------</option>
               <option *ngFor="let c of categories._embedded.categories" value="{{c.id}}">{{c.designation}}</option>
             </select>
@@ -40,17 +40,17 @@
               <th scope="col">Designation</th>
               <th scope="col">Quantite</th>
               <th scope="col">Prix</th>
-              <th scope="col">Category</th>
+              <th scope="col">Action</th>
             </tr>
             </thead>
-            <tbody>
-            <tr *ngFor="let p of products._embedded.products">
-              <th scope="row">{{p.id}}</th>
-              <td>{{p.description}}</td>
-              <td>{{p.quantity}}</td>
-              <td>{{p.price|number:'0.2'}}FCA</td>
-              <td></td>
-           </tr>
+            <tbody *ngIf="products">
+              <tr *ngFor="let p of products._embedded.products">
+                <th scope="row">{{p.id}}</th>
+                <td>{{p.description}}</td>
+                <td>{{p.quantity}}</td>
+                <td>{{p.price|number:'0.2'}}FCA</td>
+                <td><a routerLink="/products/{{p.id}}">edit</a></td>
+             </tr>
             </tbody>
           </table>
           <ul *ngIf="pages" class="pagination">

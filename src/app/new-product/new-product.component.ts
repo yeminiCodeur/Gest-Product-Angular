@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CatalogueService} from "../services/catalogue.service";
+import {Router} from "@angular/router";
+import {Product} from "../model/product.model";
 
 @Component({
   selector: 'app-new-product',
@@ -13,7 +15,9 @@ export class NewProductComponent implements OnInit {
   currentPage:number=0
   totalPages:number=0
   pages:Array<number>;
-  constructor(private service:CatalogueService) { }
+  category:any;
+  private  currentProduct:any;
+  constructor(private service:CatalogueService, private router:Router) { }
 
   ngOnInit() {
     this.onGetProducts();
@@ -41,10 +45,19 @@ export class NewProductComponent implements OnInit {
 
   saveProduct(value) {
 
-    this.onGetProducts();
+    this.service.findCategory(value.category).subscribe(data=>{
+      this.category = data
+    });
+    value = {
+      "description": value.description,
+      "quantity":value.quantity,
+      "price":value.price,
+      "category": this.category
+    }
+    this.service.postData(value).subscribe(d =>{
+      this.currentProduct =  d;
+    return this.router.navigateByUrl("/new-product");
+    });
   }
 
-  getCategory(href:string) {
-
-  }
 }
